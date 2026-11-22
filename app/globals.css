@@ -741,3 +741,27 @@ button {
     display: none !important;
   }
 }
+
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+.hero-kicker,
+.hero-title,
+.hero-copy,
+.hero-cta,
+.hero-card {
+  animation: hero-rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-title { animation-delay: 0.08s; }
+.hero-copy { animation-delay: 0.16s; }
+.hero-cta { animation-delay: 0.24s; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-kicker,
+  .hero-title,
+  .hero-copy,
+  .hero-cta,
+  .hero-card {
+    animation: none;
+  }
+}
