@@ -25,21 +25,22 @@ export function HomeHero() {
             Invitations, composed with care.
           </h1>
           <p className="hero-copy mt-6 max-w-md text-base leading-relaxed text-[#e8dccb] sm:text-lg">
-            Nine beautiful ready-made templates. An AI writer for English, Hindi, and Gujarati.
-            A live editor, print-ready downloads, and a guest link with WhatsApp RSVP.
+            A library of ready-made still cards and video invitations. Change the wording —
+            names, date, venue — in English, Hindi or Gujarati. Preview freely, then unlock a
+            clean download when you are ready.
           </p>
           <div className="hero-cta mt-8 flex flex-wrap gap-3">
             <Link
-              href="/create"
+              href="/templates"
               className="btn-gold !bg-[#d4b56a] !text-[#1c0b0f] hover:!bg-[#e8c872]"
             >
-              Start with AI
+              Browse templates
             </Link>
             <Link
-              href="/templates"
+              href="/create"
               className="btn-outline !border-[#d4b56a66] !text-[#f7f1e8] hover:!border-[#d4b56a]"
             >
-              Browse templates
+              AI wording
             </Link>
           </div>
         </div>

@@ -1,0 +1,36 @@
+import { createServerClient } from "@supabase/ssr";
+import { NextResponse, type NextRequest } from "next/server";
+import { supabasePublishableKey, supabaseUrl } from "./env";
+
+export async function updateSession(request: NextRequest) {
+  let supabaseResponse = NextResponse.next({ request });
+
+  const supabase = createServerClient(supabaseUrl(), supabasePublishableKey(), {
+    cookies: {
+      getAll() {
+        return request.cookies.getAll();
+      },
+      setAll(cookiesToSet) {
+        cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
+        supabaseResponse = NextResponse.next({ request });
+        cookiesToSet.forEach(({ name, value, options }) => supabaseResponse.cookies.set(name, value, options));
+      },
+    },
+  });
+
+  const { data } = await supabase.auth.getUser();
+  const user = data.user;
+
+  const path = request.nextUrl.pathname;
+  const authedOnly = path.startsWith("/designs") || path.startsWith("/admin") || path.startsWith("/unlock");
+  if (authedOnly && !user) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    url.searchParams.set("next", path + request.nextUrl.search);
+    const redirect = NextResponse.redirect(url);
+    supabaseResponse.cookies.getAll().forEach((c) => redirect.cookies.set(c.name, c.value));
+    return redirect;
+  }
+
+  return supabaseResponse;
+}

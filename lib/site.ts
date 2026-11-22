@@ -8,6 +8,6 @@ export function getSiteUrl(): string {
 }
 
 export const siteName = "Vivaah";
-export const siteTagline = "Beautiful wedding invitations, composed with care.";
+export const siteTagline = "A library of ready-made wedding invitations — still cards and video, yours to personalise.";
 export const siteDescription =
-  "Design a wedding invitation in minutes. Choose from nine ready-made templates, let AI write the wording in English, Hindi, or Gujarati, then share a link or download a print-ready card.";
+  "Browse a large library of ready-made wedding invitation templates. Change the wording, names, date and venue, preview still cards or video invites, and download a watermarked preview. Clean downloads unlock later.";

@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { InvitationCard } from "@/components/invites/InvitationCard";
+import { InvitationView } from "@/components/render/InvitationView";
+import { fileTemplates, getFileTemplate } from "@/lib/catalog";
+import { rupees } from "@/lib/slug";
 import { getSiteUrl } from "@/lib/site";
-import { getTemplate, sampleInvite, templates } from "@/lib/templates";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return templates.map((t) => ({ slug: t.slug }));
+  return fileTemplates.map((t) => ({ slug: t.id }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const template = templates.find((t) => t.slug === slug);
+  const template = getFileTemplate(slug);
   if (!template) return { title: "Template" };
-  const url = `${getSiteUrl()}/templates/${template.slug}`;
+  const url = `${getSiteUrl()}/templates/${template.id}`;
   return {
     title: `${template.name} invitation`,
     description: template.description,
@@ -30,11 +31,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function TemplatePage({ params }: Props) {
   const { slug } = await params;
-  const exists = templates.some((t) => t.slug === slug);
-  if (!exists) notFound();
-  const template = getTemplate(slug);
-  const data = sampleInvite(slug);
-  const others = templates.filter((t) => t.slug !== slug).slice(0, 3);
+  const template = getFileTemplate(slug);
+  if (!template) notFound();
+  const others = fileTemplates.filter((t) => t.id !== slug && t.category === template.category).slice(0, 4);
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-12">
@@ -46,43 +45,65 @@ export default async function TemplatePage({ params }: Props) {
         {template.name}
       </p>
       <div className="mt-6 grid items-start gap-12 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="mx-auto w-full max-w-[520px]">
-          <InvitationCard data={data} variant="full" cardId={`page-${slug}`} />
+        <div className={`mx-auto w-full ${template.kind === "video" ? "max-w-[360px]" : "max-w-[520px]"}`}>
+          <InvitationView template={template} fields={template.sample} playing />
         </div>
         <aside className="lg:sticky lg:top-24">
-          <h1 className="font-serif text-4xl">{template.name}</h1>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-full bg-[#f0e6d6] px-2 py-0.5 text-[10px] tracking-wide uppercase text-[#6b1d2a]">
+              {template.kind === "video" ? "Video" : "Still card"}
+            </span>
+            <span className="text-[11px] tracking-wide uppercase text-[#8a7a6a]">{template.category.replace("-", " ")}</span>
+          </div>
+          <h1 className="font-serif mt-3 text-4xl">{template.name}</h1>
           <p className="mt-2 text-[#8a7a6a]">{template.tagline}</p>
           <p className="mt-4 text-[15px] leading-relaxed text-[#4a3d34]">{template.description}</p>
-          <div className="mt-6 flex flex-wrap gap-2">
-            {template.palette.map((color) => (
-              <span
-                key={color}
-                className="h-7 w-7 rounded-full border border-black/10"
-                style={{ background: color }}
-                title={color}
-              />
-            ))}
-          </div>
+          <p className="mt-4 text-sm text-[#6b5a4c]">
+            Clean download from {rupees(template.pricePaise)}. Preview and watermarked export are free.
+            Payments will be added later; an admin can unlock a design by hand for now.
+          </p>
+          {template.video ? (
+            <p className="mt-3 text-xs leading-relaxed text-[#8a7a6a]">
+              Background clip: {template.video.credit}. License: {template.video.license}. See{" "}
+              <Link href="/legal/credits" className="underline">
+                credits
+              </Link>
+              .
+            </p>
+          ) : null}
           <div className="mt-8 flex flex-col gap-3">
-            <Link href={`/create?template=${template.slug}`} className="btn-gold">
+            <Link href={`/editor?template=${template.id}`} className="btn-gold">
               Use this template
             </Link>
-            <Link href={`/invite?demo=${template.slug}`} className="btn-outline">
-              Open guest preview
+            <Link href="/templates" className="btn-outline">
+              Back to the library
             </Link>
           </div>
-          <div className="mt-12">
-            <p className="text-[11px] tracking-[0.18em] uppercase text-[#8a7a6a]">More designs</p>
-            <ul className="mt-3 space-y-2">
-              {others.map((t) => (
-                <li key={t.slug}>
-                  <Link href={`/templates/${t.slug}`} className="text-sm hover:text-[#6b1d2a]">
-                    {t.name} — {t.tagline}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <div className="mt-12 flex flex-wrap gap-2">
+            {template.tags.map((tag) => (
+              <Link
+                key={tag}
+                href={`/templates?tag=${tag}`}
+                className="rounded-full border border-[#e0d4c6] px-2.5 py-0.5 text-[11px] text-[#6b5a4c]"
+              >
+                {tag}
+              </Link>
+            ))}
           </div>
+          {others.length ? (
+            <div className="mt-12">
+              <p className="text-[11px] tracking-[0.18em] uppercase text-[#8a7a6a]">More in this event</p>
+              <ul className="mt-3 space-y-2">
+                {others.map((t) => (
+                  <li key={t.id}>
+                    <Link href={`/templates/${t.id}`} className="text-sm hover:text-[#6b1d2a]">
+                      {t.name} — {t.tagline}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
         </aside>
       </div>
     </div>

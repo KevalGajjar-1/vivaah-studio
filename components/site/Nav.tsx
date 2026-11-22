@@ -1,6 +1,24 @@
 import Link from "next/link";
+import { isSupabaseConfigured } from "@/lib/supabase/env";
+import { createClient } from "@/lib/supabase/server";
 
-export function Nav() {
+export async function Nav() {
+  let email: string | null = null;
+  let isAdmin = false;
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createClient();
+      const { data } = await supabase.auth.getUser();
+      email = data.user?.email ?? null;
+      if (data.user) {
+        const { data: admin } = await supabase.rpc("is_admin");
+        isAdmin = Boolean(admin);
+      }
+    } catch {
+      email = null;
+    }
+  }
+
   return (
     <header className="site-nav no-print sticky top-0 z-40 border-b border-[#e8dccb]/80 bg-[#f7f1e8]/85">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
@@ -10,15 +28,33 @@ export function Nav() {
             Studio
           </span>
         </Link>
-        <nav className="flex items-center gap-5 text-sm">
+        <nav className="flex items-center gap-4 text-sm sm:gap-5">
           <Link href="/templates" className="text-[#4a3d34] transition hover:text-[#6b1d2a]">
             Templates
           </Link>
-          <Link href="/create" className="text-[#4a3d34] transition hover:text-[#6b1d2a]">
-            Create
-          </Link>
-          <Link href="/create" className="btn-gold !px-4 !py-1.5 text-[13px]">
-            Make an invite
+          {email ? (
+            <Link href="/designs" className="text-[#4a3d34] transition hover:text-[#6b1d2a]">
+              My designs
+            </Link>
+          ) : null}
+          {isAdmin ? (
+            <Link href="/admin" className="text-[#4a3d34] transition hover:text-[#6b1d2a]">
+              Admin
+            </Link>
+          ) : null}
+          {email ? (
+            <form action="/auth/signout" method="post">
+              <button type="submit" className="text-[#4a3d34] transition hover:text-[#6b1d2a]">
+                Sign out
+              </button>
+            </form>
+          ) : (
+            <Link href="/login" className="text-[#4a3d34] transition hover:text-[#6b1d2a]">
+              Sign in
+            </Link>
+          )}
+          <Link href="/templates" className="btn-gold !px-4 !py-1.5 text-[13px]">
+            Browse templates
           </Link>
         </nav>
       </div>
