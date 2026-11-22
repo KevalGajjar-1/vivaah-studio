@@ -1,0 +1,73 @@
+"use client";
+
+import { useRef } from "react";
+import Link from "next/link";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { InvitationCard } from "@/components/invites/InvitationCard";
+import { sampleInvite } from "@/lib/templates";
+
+gsap.registerPlugin(useGSAP);
+
+const featured = ["royal-mandala", "classic-floral", "art-deco"] as const;
+
+export function HomeHero() {
+  const root = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      tl.from(".hero-kicker", { y: 16, opacity: 0, duration: 0.6 })
+        .from(".hero-title", { y: 28, opacity: 0, duration: 0.8 }, "-=0.3")
+        .from(".hero-copy", { y: 18, opacity: 0, duration: 0.6 }, "-=0.4")
+        .from(".hero-cta", { y: 12, opacity: 0, duration: 0.5 }, "-=0.3")
+        .from(".hero-card", { y: 40, opacity: 0, rotate: 2, stagger: 0.12, duration: 0.8 }, "-=0.5");
+    },
+    { scope: root },
+  );
+
+  return (
+    <section ref={root} className="relative overflow-hidden bg-[#1c0b0f] text-[#f7f1e8]">
+      <div className="pointer-events-none absolute inset-0 opacity-40" style={{ background: "radial-gradient(ellipse at 20% 0%, #6b1d2a 0%, transparent 50%), radial-gradient(ellipse at 90% 80%, #b8952a33 0%, transparent 40%)" }} />
+      <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 lg:grid-cols-2 lg:py-24">
+        <div>
+          <p className="hero-kicker text-[11px] tracking-[0.32em] uppercase text-[#d4b56a]">
+            Invitation atelier
+          </p>
+          <h1 className="hero-title font-serif mt-4 text-5xl leading-[1.05] text-[#f7f1e8] sm:text-6xl lg:text-7xl">
+            Invitations, composed with care.
+          </h1>
+          <p className="hero-copy mt-6 max-w-md text-base leading-relaxed text-[#e8dccb] sm:text-lg">
+            Nine beautiful ready-made templates. An AI writer for English, Hindi, and Gujarati.
+            A live editor, print-ready downloads, and a guest link with WhatsApp RSVP.
+          </p>
+          <div className="hero-cta mt-8 flex flex-wrap gap-3">
+            <Link href="/create" className="btn-gold !bg-[#d4b56a] !text-[#1c0b0f] hover:!bg-[#e8c872]">
+              Start with AI
+            </Link>
+            <Link href="/templates" className="btn-outline !border-[#d4b56a66] !text-[#f7f1e8] hover:!border-[#d4b56a]">
+              Browse templates
+            </Link>
+          </div>
+        </div>
+        <div className="relative mx-auto h-[420px] w-full max-w-[420px] sm:h-[480px]">
+          {featured.map((slug, i) => (
+            <Link
+              key={slug}
+              href={`/templates/${slug}`}
+              className="hero-card absolute w-[58%] transition hover:-translate-y-1"
+              style={{
+                left: `${i * 18}%`,
+                top: `${12 + (i - 1) * 8}%`,
+                zIndex: i === 1 ? 3 : 1,
+                rotate: `${(i - 1) * 7}deg`,
+              }}
+            >
+              <InvitationCard data={sampleInvite(slug)} variant="thumb" cardId={`hero-${slug}`} />
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
