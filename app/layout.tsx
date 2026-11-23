@@ -3,6 +3,7 @@ import { fontVariables } from "@/lib/fonts";
 import { getSiteUrl, siteDescription, siteName, siteTagline } from "@/lib/site";
 import { Footer } from "@/components/site/Footer";
 import { Nav } from "@/components/site/Nav";
+import { PathChrome } from "@/components/site/PathChrome";
 import "./globals.css";
 
 const siteUrl = getSiteUrl();
@@ -44,9 +45,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${fontVariables} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-ivory text-ink">
-        <Nav />
+        <PathChrome>
+          <Nav />
+        </PathChrome>
         <main className="flex-1">{children}</main>
-        <Footer />
+        <PathChrome>
+          <Footer />
+        </PathChrome>
       </body>
     </html>
   );

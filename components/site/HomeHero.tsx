@@ -19,28 +19,28 @@ export function HomeHero() {
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 lg:grid-cols-2 lg:py-24">
         <div>
           <p className="hero-kicker text-[11px] tracking-[0.32em] uppercase text-[#d4b56a]">
-            Invitation atelier
+            Indian wedding planning
           </p>
           <h1 className="hero-title font-serif mt-4 text-5xl leading-[1.05] text-[#f7f1e8] sm:text-6xl lg:text-7xl">
-            Invitations, composed with care.
+            From the first invite to the last RSVP.
           </h1>
           <p className="hero-copy mt-6 max-w-md text-base leading-relaxed text-[#e8dccb] sm:text-lg">
-            A library of ready-made still cards and video invitations. Change the wording —
-            names, date, venue — in English, Hindi or Gujarati. Preview freely, then unlock a
-            clean download when you are ready.
+            Design still and video invitations, publish a wedding website your family can open,
+            and keep Haldi, Mehendi, Sangeet, the wedding and the reception in one guest list —
+            in English, Hindi or Gujarati.
           </p>
           <div className="hero-cta mt-8 flex flex-wrap gap-3">
             <Link
-              href="/templates"
+              href="/create"
               className="btn-gold !bg-[#d4b56a] !text-[#1c0b0f] hover:!bg-[#e8c872]"
             >
-              Browse templates
+              Design an invitation
             </Link>
             <Link
-              href="/create"
+              href="/tools/messages"
               className="btn-outline !border-[#d4b56a66] !text-[#f7f1e8] hover:!border-[#d4b56a]"
             >
-              AI wording
+              Free message writer
             </Link>
           </div>
         </div>

@@ -1,37 +1,27 @@
-# Vivaah — Wedding Invitation Studio
+# Vivaah — Indian Wedding Planning Studio
 
-A polished Next.js app for designing wedding invitations. Choose from nine original, ready-made templates, let AI (or a studio fallback) write the wording in English, Hindi, or Gujarati, preview live, download a PNG or PDF, and share a guest link with WhatsApp RSVP. Invitation details are encoded in the URL — no database required.
+A Next.js app for Indian weddings: a ready-made invitation library (still cards and video), an AI invitation designer, an animated wedding website with RSVP, a guest list manager, and free wording tools in English, Hindi and Gujarati.
 
-## Templates
-
-| Slug | Name | Style |
-| --- | --- | --- |
-| `classic-floral` | Classic Floral | Botanical ivory and blush |
-| `royal-mandala` | Royal Mandala | Hindu maroon, gold, and lotus |
-| `minimalist-modern` | Minimalist Modern | Editorial typography |
-| `boho-watercolor` | Boho Watercolour | Terracotta, sage, and sun |
-| `art-deco` | Art Deco Gold | Black, geometry, and gilded glamour |
-| `rustic` | Rustic Kraft | Oak leaves on warm paper |
-| `church-elegant` | Church Elegant | Ivory, navy, and a sacred arch |
-| `nikah-elegant` | Nikah Emerald | Emerald, gold, and arabesque |
-| `south-indian-temple` | Temple Kalyanam | Gopuram, kolam, and turmeric gold |
+Accounts, designs, wedding pages, guests and RSVPs are stored in Supabase with row-level security. Clean invitation downloads stay watermarked until a design is unlocked (payments are still a placeholder; an admin can grant access). WhatsApp sending is reserved for a later phase.
 
 ## Routes
 
 - `/` — studio home
-- `/templates` — gallery
-- `/templates/<slug>` — sample invitation
-- `/create` — AI wording harness and template picker
-- `/editor?d=...` — live editor
-- `/invite?d=...` — guest page (shareable)
+- `/templates` and `/templates/<slug>` — invitation library
+- `/create` — invitation designer wizard
+- `/editor` and `/designs/<id>` — wording editor, preview and download
+- `/dashboard` — couple dashboard
+- `/dashboard/wedding` — wedding website editor
+- `/dashboard/guests` — guest list, CSV import/export, per-event RSVPs
+- `/w/<slug>` — public wedding website
+- `/i/<slug>` — public unlocked invitation link
+- `/tools/messages` — free message writer (rate-limited, no login)
+- `/tools/hashtags` and `/tools/guest-list` — small planning tools
+- `/blog` — planning guides
 
 ## AI wording
 
-The writer uses the Vercel AI SDK through [AI Gateway](https://vercel.com/docs/ai-gateway) (`google/gemini-2.5-flash` by default).
-
-On Vercel, OIDC is used automatically when `VERCEL_OIDC_TOKEN` is present. For local development, set `AI_GATEWAY_API_KEY`. Optionally set `AI_GATEWAY_MODEL` to any Gateway model id.
-
-If no credentials are available, or the model call fails, a high-quality template-based wording generator is used instead. The UI reports which source is live.
+The invitation writer uses the Vercel AI SDK through [AI Gateway](https://vercel.com/docs/ai-gateway) (`google/gemini-2.5-flash` by default) when `AI_GATEWAY_API_KEY` or `VERCEL_OIDC_TOKEN` is present. Otherwise a built-in English, Hindi and Gujarati fallback is used. The free message tool always uses the built-in generator.
 
 ## Develop
 
@@ -42,4 +32,4 @@ npm run dev
 
 ## Stack
 
-Next.js (App Router), Tailwind CSS, Vercel AI SDK, GSAP, `html-to-image`, jsPDF.
+Next.js (App Router), Tailwind CSS, Supabase, Vercel AI SDK, GSAP, `html-to-image`, jsPDF.

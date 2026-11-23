@@ -6,26 +6,35 @@ import { fileTemplates } from "@/lib/catalog";
 import { rupees } from "@/lib/slug";
 
 export const metadata: Metadata = {
-  title: "Vivaah — Wedding Invitation Studio",
+  title: "Vivaah — Indian Wedding Planning Studio",
   description:
-    "A Canva-style library of ready-made wedding invitations. Change the wording on still cards and video templates for wedding, engagement, haldi, mehendi, sangeet, reception and save-the-date.",
+    "Design wedding invitations, publish an animated wedding website, manage your guest list, and write messages in English, Hindi or Gujarati.",
 };
 
-const steps = [
+const features = [
   {
     n: "01",
-    title: "Pick a finished design",
-    body: "Browse still cards and video invitations by event and style. The layout, typography and ornaments stay as they are.",
+    title: "AI invitation designer",
+    body: "Answer a few questions — names, events, venue, language and vibe — and get a designed still or video invitation you can edit and download.",
+    href: "/create",
   },
   {
     n: "02",
-    title: "Change the wording",
-    body: "Edit names, date, venue and invitation text — in English, Hindi or Gujarati. Rewrite with the studio writer when you want a fresh draft.",
+    title: "Wedding website",
+    body: "A mobile-first page for your story, schedule, maps and a countdown. Guests RSVP for Haldi, Mehendi, Sangeet, the wedding and the reception.",
+    href: "/dashboard/wedding",
   },
   {
     n: "03",
-    title: "Preview, save, unlock",
-    body: "Download a watermarked preview for free. Save to My designs, then unlock a clean file and guest link when payments (or an admin grant) are ready.",
+    title: "Guest list & headcount",
+    body: "Add or import guests, group them by side and family, track RSVPs per event, and export a clean sheet for the caterer.",
+    href: "/dashboard/guests",
+  },
+  {
+    n: "04",
+    title: "Free message writer",
+    body: "No account needed. Formal, Hinglish, shayari or traditional wording in English, Hindi or Gujarati — ready to copy.",
+    href: "/tools/messages",
   },
 ];
 
@@ -48,6 +57,28 @@ export default function HomePage() {
     <>
       <HomeHero />
       <section className="mx-auto max-w-6xl px-5 py-20">
+        <p className="text-[11px] tracking-[0.28em] uppercase text-[#8a7a6a]">The studio</p>
+        <h2 className="font-serif mt-2 max-w-2xl text-4xl text-[#1a1410]">
+          Everything a couple needs before the first function.
+        </h2>
+        <div className="mt-12 grid gap-8 md:grid-cols-2">
+          {features.map((feature) => (
+            <Link
+              key={feature.n}
+              href={feature.href}
+              className="group border-t border-[#e8dccb] pt-6 transition hover:border-[#b8952a]"
+            >
+              <p className="font-serif text-3xl text-[#6b1d2a]">{feature.n}</p>
+              <h3 className="mt-3 text-xl">{feature.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-[#6b5a4c]">{feature.body}</p>
+              <span className="mt-4 inline-block text-sm text-[#6b1d2a] underline-offset-4 group-hover:underline">
+                Open
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+      <section className="mx-auto max-w-6xl px-5 pb-20">
         <div className="flex items-end justify-between gap-6">
           <div>
             <p className="text-[11px] tracking-[0.28em] uppercase text-[#8a7a6a]">The library</p>
@@ -78,9 +109,25 @@ export default function HomePage() {
       <section className="bg-[#1c0b0f] py-20 text-[#f7f1e8]">
         <div className="mx-auto max-w-6xl px-5">
           <p className="text-[11px] tracking-[0.28em] uppercase text-[#d4b56a]">How it works</p>
-          <h2 className="font-serif mt-2 text-4xl">From a finished template to your invitation</h2>
+          <h2 className="font-serif mt-2 text-4xl">Start with the invite, finish with the list</h2>
           <div className="mt-12 grid gap-8 md:grid-cols-3">
-            {steps.map((step) => (
+            {[
+              {
+                n: "01",
+                title: "Tell us the shaadi",
+                body: "Names, Haldi to reception, venue, language and vibe. We write the wording and suggest a finished template.",
+              },
+              {
+                n: "02",
+                title: "Publish a page guests can open",
+                body: "Your story, schedule and maps live on a beautiful link. Guests RSVP for each function in one form.",
+              },
+              {
+                n: "03",
+                title: "Keep the headcount honest",
+                body: "Both sides add guests, RSVPs land in one list, and you export numbers the caterer can trust.",
+              },
+            ].map((step) => (
               <div key={step.n} className="border-t border-[#d4b56a]/30 pt-6">
                 <p className="font-serif text-3xl text-[#d4b56a]">{step.n}</p>
                 <h3 className="mt-3 text-lg">{step.title}</h3>
@@ -88,23 +135,28 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-          <Link href="/templates" className="btn-gold mt-12 !bg-[#d4b56a] !text-[#1c0b0f] hover:!bg-[#e8c872]">
-            Browse the library
-          </Link>
+          <div className="mt-12 flex flex-wrap gap-3">
+            <Link href="/create" className="btn-gold !bg-[#d4b56a] !text-[#1c0b0f] hover:!bg-[#e8c872]">
+              Design an invitation
+            </Link>
+            <Link href="/signup" className="btn-outline !border-[#d4b56a66] !text-[#f7f1e8] hover:!border-[#d4b56a]">
+              Create a free account
+            </Link>
+          </div>
         </div>
       </section>
       <section className="mx-auto max-w-6xl px-5 py-20">
         <p className="text-[11px] tracking-[0.28em] uppercase text-[#8a7a6a]">Pricing</p>
-        <h2 className="font-serif mt-2 text-4xl">Start free, unlock a clean file later</h2>
+        <h2 className="font-serif mt-2 text-4xl">Plan free, unlock a clean file later</h2>
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           <div className="rounded-2xl border border-[#e8dccb] bg-white p-8">
-            <p className="text-[11px] tracking-[0.2em] uppercase text-[#8a7a6a]">Preview</p>
+            <p className="text-[11px] tracking-[0.2em] uppercase text-[#8a7a6a]">Planning</p>
             <p className="font-serif mt-2 text-4xl">Free</p>
             <ul className="mt-4 space-y-2 text-sm text-[#6b5a4c]">
-              <li>Browse the full library</li>
-              <li>Change wording, names, date and venue</li>
-              <li>Watermarked PNG, PDF or video export</li>
-              <li>Save designs to your account</li>
+              <li>Invitation designer and watermarked previews</li>
+              <li>Wedding website with RSVP</li>
+              <li>Guest list, CSV import and export</li>
+              <li>Free message writer, no account needed</li>
             </ul>
           </div>
           <div className="rounded-2xl border border-[#6b1d2a]/30 bg-[#fbf6ee] p-8">

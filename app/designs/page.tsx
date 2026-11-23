@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { DashboardNav } from "@/components/dashboard/DashboardNav";
 import { DesignList, type DesignRow } from "@/components/dashboard/DesignList";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { createClient } from "@/lib/supabase/server";
@@ -35,6 +36,7 @@ export default async function DesignsPage() {
         </div>
         <Link href="/templates" className="btn-gold">New invitation</Link>
       </div>
+      <DashboardNav />
       <DesignList initial={(data || []) as DesignRow[]} />
     </div>
   );

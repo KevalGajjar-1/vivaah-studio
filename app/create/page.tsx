@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import { CreateStudio } from "@/components/create/CreateStudio";
-import { emptyInvite, getTemplate } from "@/lib/templates";
+import { DesignerWizard } from "@/components/create/DesignerWizard";
 
 export const metadata: Metadata = {
-  title: "Create an invitation",
+  title: "Invitation designer",
   description:
-    "Write wedding invitation wording with AI in English, Hindi, or Gujarati, choose a template, and open the live editor.",
+    "Design a wedding invitation from names, events, venue and vibe. Edit the wording and preview a still card or video invite in English, Hindi or Gujarati.",
 };
 
 export default async function CreatePage({
@@ -14,8 +13,5 @@ export default async function CreatePage({
   searchParams: Promise<{ template?: string }>;
 }) {
   const { template } = await searchParams;
-  const initial = emptyInvite(template);
-  initial.template = getTemplate(template).slug;
-  initial.style = getTemplate(template).style;
-  return <CreateStudio initial={initial} />;
+  return <DesignerWizard initialTemplate={template} />;
 }

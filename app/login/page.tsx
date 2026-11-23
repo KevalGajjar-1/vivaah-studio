@@ -13,7 +13,7 @@ export default async function LoginPage({
   return (
     <AuthForm
       mode="login"
-      nextPath={next?.startsWith("/") ? next : "/designs"}
+      nextPath={next?.startsWith("/") ? next : "/dashboard"}
       errorMessage={error ? "Could not complete sign-in. Please try again." : undefined}
     />
   );

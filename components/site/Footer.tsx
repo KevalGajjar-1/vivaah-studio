@@ -8,8 +8,8 @@ export function Footer() {
         <div>
           <p className="font-serif text-2xl text-[#6b1d2a]">Vivaah</p>
           <p className="mt-2 max-w-xs text-sm leading-relaxed text-[#6b5a4c]">
-            A studio of ready-made wedding invitations. Pick a finished layout, change the wording, and
-            share a still card or a video invite.
+            An Indian wedding planning studio: invitations, an animated wedding website, a guest list,
+            and free wording tools in English, Hindi and Gujarati.
           </p>
         </div>
         <div>
@@ -34,12 +34,22 @@ export function Footer() {
             </li>
             <li>
               <Link href="/create" className="hover:text-[#6b1d2a]">
-                AI invitation writer
+                Invitation designer
               </Link>
             </li>
             <li>
-              <Link href="/designs" className="hover:text-[#6b1d2a]">
-                My designs
+              <Link href="/tools/messages" className="hover:text-[#6b1d2a]">
+                Free message writer
+              </Link>
+            </li>
+            <li>
+              <Link href="/dashboard" className="hover:text-[#6b1d2a]">
+                Couple dashboard
+              </Link>
+            </li>
+            <li>
+              <Link href="/blog" className="hover:text-[#6b1d2a]">
+                Journal
               </Link>
             </li>
             <li>

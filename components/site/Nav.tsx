@@ -28,13 +28,22 @@ export async function Nav() {
             Studio
           </span>
         </Link>
-        <nav className="flex items-center gap-4 text-sm sm:gap-5">
-          <Link href="/templates" className="text-[#4a3d34] transition hover:text-[#6b1d2a]">
+        <nav className="flex items-center gap-3 text-sm sm:gap-5">
+          <Link href="/templates" className="hidden text-[#4a3d34] transition hover:text-[#6b1d2a] sm:inline">
             Templates
           </Link>
+          <Link href="/create" className="hidden text-[#4a3d34] transition hover:text-[#6b1d2a] md:inline">
+            Designer
+          </Link>
+          <Link href="/tools" className="hidden text-[#4a3d34] transition hover:text-[#6b1d2a] sm:inline">
+            Tools
+          </Link>
+          <Link href="/blog" className="hidden text-[#4a3d34] transition hover:text-[#6b1d2a] md:inline">
+            Journal
+          </Link>
           {email ? (
-            <Link href="/designs" className="text-[#4a3d34] transition hover:text-[#6b1d2a]">
-              My designs
+            <Link href="/dashboard" className="text-[#4a3d34] transition hover:text-[#6b1d2a]">
+              Dashboard
             </Link>
           ) : null}
           {isAdmin ? (
@@ -53,8 +62,8 @@ export async function Nav() {
               Sign in
             </Link>
           )}
-          <Link href="/templates" className="btn-gold !px-4 !py-1.5 text-[13px]">
-            Browse templates
+          <Link href="/create" className="btn-gold !px-4 !py-1.5 text-[13px]">
+            Start planning
           </Link>
         </nav>
       </div>

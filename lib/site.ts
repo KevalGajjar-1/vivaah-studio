@@ -8,6 +8,7 @@ export function getSiteUrl(): string {
 }
 
 export const siteName = "Vivaah";
-export const siteTagline = "A library of ready-made wedding invitations — still cards and video, yours to personalise.";
+export const siteTagline =
+  "An AI wedding planning studio for Indian weddings — invitations, a wedding website, and a guest list in one place.";
 export const siteDescription =
-  "Browse a large library of ready-made wedding invitation templates. Change the wording, names, date and venue, preview still cards or video invites, and download a watermarked preview. Clean downloads unlock later.";
+  "Plan an Indian wedding with Vivaah: design still and video invitations, publish an animated wedding website with RSVP, manage your guest list, and write WhatsApp-ready messages in English, Hindi or Gujarati.";

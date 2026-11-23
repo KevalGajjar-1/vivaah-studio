@@ -838,3 +838,41 @@ button {
 @media (prefers-reduced-motion: reduce) {
   .vid-fade, .vid-fade-slow { animation: none; }
 }
+
+
+/* ---------- Public wedding website ---------- */
+.wedding-site {
+  min-height: 100%;
+}
+.wedding-site[data-theme="ivory"] {
+  background: #f7f1e8;
+  color: #1a1410;
+}
+.wedding-site[data-theme="wine"] {
+  background: #14080b;
+  color: #f7f1e8;
+}
+.wedding-site[data-theme="marigold"] {
+  background: #2a1608;
+  color: #f8ecd8;
+}
+.wedding-kicker {
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+.wedding-hero-title {
+  font-family: var(--font-cormorant), Palatino, serif;
+  line-height: 1.05;
+}
+.wedding-site [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wedding-site [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
